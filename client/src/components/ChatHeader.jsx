@@ -78,11 +78,12 @@ const ActionButton = styled.button`
 const ChatHeader = () => {
   const { activeConversation } = useChatStore()
   const { user } = useUserStore()
+  const { onlineUsers } = useChatStore()
   
   if (!activeConversation) return null
   
   const otherUser = activeConversation.participants.find(p => p._id !== user._id) || {}
-  const isOnline = false // This will be updated with socket status
+  const isOnline = onlineUsers[otherUser._id] || false
   
   return (
     <HeaderContainer>

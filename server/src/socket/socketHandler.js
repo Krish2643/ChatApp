@@ -59,16 +59,26 @@ export const socketHandler = (io) => {
       
       try {
         // Update message status to delivered
-        await Message.findByIdAndUpdate(message._id, { status: 'delivered' });
+        const updatedMessage = await Message.findByIdAndUpdate(
+          message._id,
+          { status: 'delivered' },
+          { new: true }
+        ).populate('sender', 'name email');
         
         // Emit to sender (for confirmation)
-        socket.emit('new_message', { message });
+        socket.emit('new_message', { message: updatedMessage });
         
         // Send to receiver if online
         if (receiverId && onlineUsers.has(receiverId)) {
           const receiverSocketId = onlineUsers.get(receiverId);
-          io.to(receiverSocketId).emit('new_message', { message });
+          io.to(receiverSocketId).emit('new_message', { message: updatedMessage });
         }
+        
+        // Broadcast to all users in the conversation
+        io.emit('conversation_updated', {
+          conversationId: message.conversation,
+          lastMessage: updatedMessage
+        });
       } catch (error) {
         console.error('Error handling new message:', error);
       }

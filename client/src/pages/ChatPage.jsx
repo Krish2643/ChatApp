@@ -72,13 +72,12 @@ const LogoutButton = styled.button`
 `
 
 const ChatPage = () => {
-  const { user, socket } = useUserStore()
+  const { socket } = useUserStore()
   const { 
     activeConversation, 
     setActiveConversation,
     addMessage, 
-    setTyping, 
-    messages 
+    setTyping
   } = useChatStore()
   
   const showSidebarOnMobile = !activeConversation
@@ -89,6 +88,8 @@ const ChatPage = () => {
     // Listen for new messages
     socket.on(SOCKET_EVENTS.NEW_MESSAGE, (data) => {
       const { message } = data
+      
+      // Add message to the store
       addMessage(message)
       
       // If the message is from the active conversation, mark it as read
@@ -96,6 +97,22 @@ const ChatPage = () => {
         socket.emit('message_read', {
           messageId: message._id,
           conversationId: activeConversation._id
+        })
+      }
+    })
+    
+    // Listen for conversation updates
+    socket.on('conversation_updated', ({ conversationId, lastMessage }) => {
+      // Update the conversation in the store
+      useChatStore.getState().updateConversation(conversationId, {
+        lastMessage
+      })
+      
+      // If this is the active conversation, update it
+      if (activeConversation && conversationId === activeConversation._id) {
+        setActiveConversation({
+          ...activeConversation,
+          lastMessage
         })
       }
     })
@@ -113,12 +130,25 @@ const ChatPage = () => {
       }
     })
     
+    // Listen for online users
+    socket.on('online_users', (users) => {
+      useChatStore.getState().setOnlineUsers(users)
+    })
+    
+    // Listen for user status changes
+    socket.on('user_status', ({ userId, status }) => {
+      useChatStore.getState().updateUserStatus(userId, status)
+    })
+    
     return () => {
       socket.off(SOCKET_EVENTS.NEW_MESSAGE)
+      socket.off('conversation_updated')
       socket.off(SOCKET_EVENTS.TYPING)
       socket.off(SOCKET_EVENTS.STOP_TYPING)
+      socket.off('online_users')
+      socket.off('user_status')
     }
-  }, [socket, addMessage, setTyping, activeConversation])
+  }, [socket, addMessage, setTyping, activeConversation, setActiveConversation])
   
   const handleLogout = () => {
     logout()
