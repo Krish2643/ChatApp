@@ -1,7 +1,7 @@
 // API URLs
-export const API_URL = 'http://localhost:8000/api'
-export const SOCKET_URL = 'http://localhost:8000'
-
+export const API_URL = 'https://chatapp-1-7q6f.onrender.com/api'
+export const SOCKET_URL = 'https://chatapp-1-7q6f.onrender.com'
+// http://localhost:8000
 // Routes
 export const ROUTES = {
   LOGIN: '/login',
