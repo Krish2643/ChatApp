@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ChatPage from './pages/ChatPage'
 import ProtectedRoute from './components/ProtectedRoute'
-import { useUserStore } from './store/userStore'
+import { useUserStore } from './store/UserStore'
 import { SOCKET_URL } from './config/constants'
 
 function App() {

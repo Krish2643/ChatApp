@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { useUserStore } from '../store/userStore'
-import { useChatStore } from '../store/chatStore'
+import { useUserStore } from '../store/UserStore'
+import { useChatStore } from '../store/ChatStore'
 
 const MessageListContainer = styled.div`
   flex: 1;

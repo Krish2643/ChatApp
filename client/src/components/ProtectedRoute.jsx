@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom'
-import { useUserStore } from '../store/userStore'
+import { useUserStore } from '../store/UserStore'
 import { ROUTES } from '../config/constants'
 
 const ProtectedRoute = ({ children }) => {

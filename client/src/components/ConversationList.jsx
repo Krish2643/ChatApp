@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { FiSearch, FiUser, FiEdit } from 'react-icons/fi'
 import styled from 'styled-components'
-import { useChatStore } from '../store/chatStore'
-import { useUserStore } from '../store/userStore'
+import { useChatStore } from '../store/ChatStore'
+import { useUserStore } from '../store/UserStore'
 import { getConversations, searchUsers, createConversation } from '../api/chat'
 import UserSearchResults from './UserSearchResults'
 

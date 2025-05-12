@@ -1,7 +1,7 @@
 import { FiMoreVertical } from 'react-icons/fi'
 import styled from 'styled-components'
-import { useUserStore } from '../store/userStore'
-import { useChatStore } from '../store/chatStore'
+import { useUserStore } from '../store/UserStore'
+import { useChatStore } from '../store/ChatStore'
 
 const HeaderContainer = styled.div`
   display: flex;
