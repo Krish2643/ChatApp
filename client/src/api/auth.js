@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_URL, STORAGE_KEYS } from '../config/constants'
-import { useUserStore } from '../store/userStore'
+import { useUserStore } from '../store/UserStore'
 
 const api = axios.create({
   baseURL: API_URL,

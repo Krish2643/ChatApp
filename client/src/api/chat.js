@@ -1,5 +1,5 @@
 import api from './auth'
-import { useChatStore } from '../store/chatStore'
+import { useChatStore } from '../store/ChatStore'
 
 export const getConversations = async () => {
   try {
